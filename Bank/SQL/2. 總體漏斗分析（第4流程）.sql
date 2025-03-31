@@ -49,7 +49,7 @@ Three_Months_No_purchase_Cus AS (
 *******************************************************************************/
 
 SELECT
-    '3 Months No Purchase' AS Type,
+    '3 Months No Purchase' AS Type,                                         -- 新增類別標籤
     COUNT(CustomerID) AS 'Count'
 FROM
     Three_Months_No_purchase_Cus
@@ -59,7 +59,7 @@ WHERE
 UNION ALL
 
 SELECT
-    'No Use' AS Type,
+    'No Use' AS Type,                                                       -- 新增類別標籤
     COUNT(A_Cus) AS Count
 FROM
     No_Use_Cus
