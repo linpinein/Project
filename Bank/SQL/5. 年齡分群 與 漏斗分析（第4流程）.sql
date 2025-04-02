@@ -24,14 +24,7 @@ WITH AG as (
 		END as Age_Group
 	FROM
 		Customers
-)
-	SELECT					-- 各年齡群人數
-		Age_Group,
-		count(CustomerID)
-	FROM
-		AG
-	GROUP by
-		1     
+),
 
 /*******************************************************************************
 5-1 不活躍人數：
