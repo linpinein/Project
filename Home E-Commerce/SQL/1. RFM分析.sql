@@ -26,10 +26,10 @@ WITH F_M as (
 	- 再算出 每位客戶 最近一次 Orders.order_purchase_timestamp 與 2023-08-30 天數差距
 **************************************************************************************/
 
-R as (														-- 每個客戶最近一次消費日期（R）
+R as (																					-- 每個客戶最近一次消費日期（R）
 	SELECT DISTINCT
 		O.Customer_id,		
-		last_value(O.Order_purchase_timestamp) OVER (		-- window function：last_value 找分區的最後一行
+		last_value(O.Order_purchase_timestamp) OVER (									-- window function：last_value 找分區的最後一行
 			PARTITION by O.Customer_id
 			ORDER by O.Order_purchase_timestamp
 			ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING
@@ -37,7 +37,7 @@ R as (														-- 每個客戶最近一次消費日期（R）
 	FROM
 		Orders O
 )
-SELECT														-- 天數差距 + 合併顯示F、M，存成 RFM_analyze.csv
+SELECT																					-- 天數差距 + 合併顯示F、M，存成 RFM_analyze.csv
 	R.Customer_id,
 	round(julianday('2023-08-30 00:00') - julianday(R.Last_time_purchase),2) as "Date_Diff(R)",		-- 沒有Datediff的替代品...
 	F_M."Purchase_Count(F)",
