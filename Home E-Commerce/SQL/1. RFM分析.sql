@@ -4,7 +4,7 @@
 	- 每位客戶在Orders表，所有訂單的消費總金額
 **************************************************************************************/
 CREATE VIEW 
-	RFM_Analyze as 
+	RFM_Analyze as 																		-- 建立「RFM分析表」虛擬表，可供後面SQL查詢使用
 WITH F_M as (
 	SELECT DISTINCT
 		O.Customer_id,
