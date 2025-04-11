@@ -22,14 +22,14 @@ WITH F_M as (
 
 /**************************************************************************************
 1-2 RFM分析：最近一次消費日期（R日期）
-	- 設定分析日期為 2023-08-30，先找出 每個客戶最新一次交易日期
+	- 設定分析日期為 2023-08-30，先找出 每個客戶最新一次消費日期
 	- 再算出 每位客戶 最近一次 Orders.order_purchase_timestamp 與 2023-08-30 天數差距
 **************************************************************************************/
 
 R as (																					-- 每個客戶最近一次消費日期（R）
 	SELECT DISTINCT
 		O.Customer_id,		
-		last_value(O.Order_purchase_timestamp) OVER (									-- window function：last_value 找分區的最後一行
+		last_value(O.Order_purchase_timestamp) OVER (									-- last_value 找分區的最後一行
 			PARTITION by O.Customer_id
 			ORDER by O.Order_purchase_timestamp
 			ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING
