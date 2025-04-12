@@ -30,7 +30,7 @@ Median_R as (
 		Rank_R,
 		Total_Count_1
 	WHERE	
-		Row_num IN ((Row_count + 1) / 2, (Row_count + 2) / 2)		-- 找 ROW_num 的中位數在哪一行（假設行數為7、8）：
+		Row_num IN ((Row_count + 1) / 2 , (Row_count + 2) / 2)		-- 找 ROW_num 的中位數在哪一行（假設行數為7、8）：
 ),																		-- ROW_num 為奇數 7 → Row_num IN ( 4 , 4.5(4) ) → 中位數在第4行 → 取avg
 																		-- ROW_num 為偶數 8 → Row_num IN ( 4.5(4) , 5 ) → 中位數在第4、5行 → 取avg
 
