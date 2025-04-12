@@ -7,8 +7,8 @@
 /**************************************************************************************
 -- Date_diff（R）的中位數（最近一次消費日期）
 **************************************************************************************/
-CREATE VIEW 
-	RFM_Median as 
+CREATE VIEW
+	RFM_Median as 													-- 建立「RFM中位數」虛擬表，可供客戶分群使用
 WITH Rank_R as (
     SELECT 
         ROW_NUMBER() 
@@ -25,7 +25,7 @@ Total_count_1 as (													-- 計算總行數
 ),
 Median_R as (
 	SELECT
-		avg("Date_diff(R)") as Mid_R									-- 配合下列 WHERE，如果總行數為「偶數」，中位數 = 篩選出的兩個數「平均數」
+		avg("Date_diff(R)") as Mid_R								-- 配合下列 WHERE，如果總行數為「偶數」，中位數 = 篩選出的兩個數「平均數」
 	FROM 
 		Rank_R,
 		Total_Count_1
