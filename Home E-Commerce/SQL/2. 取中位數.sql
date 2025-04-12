@@ -11,7 +11,8 @@ CREATE VIEW
 	RFM_Median as 
 WITH Rank_R as (
     SELECT 
-        ROW_NUMBER() OVER (ORDER BY "Date_diff(R)") as Row_num,		-- 給每行編號
+        ROW_NUMBER() 
+			OVER (ORDER BY "Date_diff(R)") as Row_num,				-- 給每行編號
         "Date_diff(R)"												-- 抓這一欄的 中位數
     FROM 
         RFM_analyze
