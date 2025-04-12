@@ -29,17 +29,17 @@ WITH F_M as (
 R as (																				-- 每個客戶最近一次消費日期（R）
 	SELECT DISTINCT
 		O.Customer_id,		
-		last_value(O.Order_purchase_timestamp) OVER (								-- last_value 找分區的最後一行
-			PARTITION by O.Customer_id												-- 按 CustomerID 分區
-			ORDER by O.Order_purchase_timestamp										-- 以 購買時間 排序
-			ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING						-- 讓查詢從目前這行開始抓到分區最後一行，確保 last_value 抓到分區最後一筆資料
-		) as Last_time_purchase
+		last_value(O.Order_purchase_timestamp) OVER (															-- last_value 找分區的最後一行
+													PARTITION by O.Customer_id									-- 按 CustomerID 分區
+													ORDER by O.Order_purchase_timestamp							-- 以 購買時間 排序
+													ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING			-- 讓查詢從目前這行開始抓到分區最後一行，確保 last_value 抓到分區最後一筆資料
+												) as Last_time_purchase
 	FROM
 		Orders O
 )
 SELECT																				-- 天數差距 + 合併顯示F、M，存成 RFM_analyze.csv
 	R.Customer_id,
-	round(julianday('2023-08-30 00:00') - julianday(R.Last_time_purchase),2) as "Date_Diff(R)",		-- 沒有Datediff的替代品...
+	round(julianday('2023-08-30 00:00') - julianday(R.Last_time_purchase),2) as "Date_Diff(R)",					-- 沒有Datediff的替代品...
 	F_M."Purchase_Count(F)",
 	F_M."Purchase_Sum(M)"
 FROM
