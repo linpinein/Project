@@ -19,7 +19,7 @@ WITH Rank_R as (
 ),
 Total_count_1 as (													-- 計算總行數
     SELECT
-		MAX(Row_num) as Row_count									-- Row_num 最大值 = 總行數
+		MAX(Row_num) as Row_count									-- Row_num 最大值 = 總行數，作為中位數定位依據（奇數取中間，偶數取中間兩筆平均）
 	FROM
 		Rank_R
 ),
