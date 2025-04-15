@@ -71,17 +71,17 @@ Restaurant_Menus = Restaurant_Menus[new_columns_order_1]
      # 排除 經緯度為0的餐廳數據
 ##################################################################################################################################################################################################
 
-data_num = TX_Restaurant.shape[0]                                                                   # TX_Restaurant的總行數（有幾筆資料）
+data_num = TX_Restaurant.shape[0]                                                                                                           # TX_Restaurant的總行數（有幾筆資料）
 
-for i in TX_Restaurant.columns:
-    print(f"{i}共有{TX_Restaurant[i].isna().sum()}個，{round( TX_Restaurant[i].isna().sum() / data_num * 100 , 2 )}%的缺失值")
+for i in TX_Restaurant.columns:                                                                                                             # 帶入每個 columns
+    print(f"{i}共有{TX_Restaurant[i].isna().sum()}個缺失數，{round( TX_Restaurant[i].isna().sum() / data_num * 100 , 2 )}%的缺失值")          # 共有幾個缺失數，幾%的缺失值（缺失值% = 缺失值總數 ÷ 行數）
 
-TX_Restaurant.dropna(subset = ['Score','Comments',
+TX_Restaurant.dropna(subset = ['Score','Comments',                                                                                          # 排除這些欄位的空值
                                'Restaurant_Price_Range',
-                               'Restaurant_Category'] , inplace = True)
+                               'Restaurant_Category'] , inplace = True)                                                                     # inplace = True：直接在原始的 DataFrame 執行操作
 
-Lat_Lng_0 = TX_Restaurant[(TX_Restaurant['Lat'] == 0) & (TX_Restaurant['Lng'] == 0)].index          # .index：獲取符合條件的index，拉回原資料表進行排除
-TX_Restaurant = TX_Restaurant.drop(Lat_Lng_0)
+Lat_Lng_0 = TX_Restaurant[(TX_Restaurant['Lat'] == 0) & (TX_Restaurant['Lng'] == 0)].index                                                  # 找出經緯度 = 0 的數據，找出該列索引值（.index），存在 Lat_Lng_0 變數
+TX_Restaurant = TX_Restaurant.drop(Lat_Lng_0)                                                                                               # 根據 Lat_Lng_0 中的 索引，從原資料表排除對應列
 
 ##################################################################################################################################################################################################
 # 7. 檢查重複值
@@ -92,10 +92,9 @@ dup_count_1 = TX_Restaurant[TX_Restaurant.duplicated(subset = ['Restaurant_Id','
 
 ##################################################################################################################################################################################################
 # 8. 提取TX的菜單資訊
-    # 從 Restaurant_Menus 篩選出 Restaurant_Id 出現在 TX_Restaurant 的菜單資料（類似inner join），並另存為 TX_Restaurant_Menus
 ##################################################################################################################################################################################################
     
-TX_Restaurant_Menus = Restaurant_Menus[Restaurant_Menus['Restaurant_Id'].isin(TX_Restaurant['Restaurant_Id'])]      # 先取出 ID，比對 Restaurant_Menus 的 ID 是否有共通，篩選有共通的 ID 並另存為 TX_Restaurant_Menus
+TX_Restaurant_Menus = Restaurant_Menus[Restaurant_Menus['Restaurant_Id'].isin(TX_Restaurant['Restaurant_Id'])]      # 先取出 TX_Restaurant 的 ID，比對 Restaurant_Menus 的 ID 是否有共通，篩選有共通的 ID 並另存為 TX_Restaurant_Menus
 
 TX_Restaurant_Menus = TX_Restaurant_Menus.reset_index(drop=True)                                                    # 重設菜單資料的索引，刪除原本的 index（避免保留舊索引）
 TX_Restaurant = TX_Restaurant.reset_index(drop=True)
