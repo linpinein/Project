@@ -14,7 +14,7 @@ Restaurants = pd.read_csv(Path_2)
 # 2. 數據摘要，修正格式
 ##################################################################################################################################################################################################
 
-Restaurant_Menus['price'] = Restaurant_Menus['price'].str.replace(' USD','').str.strip()            # 移除 USD文字
+Restaurant_Menus['price'] = Restaurant_Menus['price'].str.replace(' USD','').str.strip()            # 移除 USD文字，排除頭尾空白值
 Restaurant_Menus['price'] = pd.to_numeric(Restaurant_Menus['price'] , errors = "coerce")            # 轉換為數值型態，不能轉換的設為nan
 
 # Restaurants.info()
