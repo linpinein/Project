@@ -87,18 +87,17 @@ TX_Restaurant = TX_Restaurant.drop(Lat_Lng_0)
 # 7. 檢查重複值
 ##################################################################################################################################################################################################
     
-dup_count = TX_Restaurant[TX_Restaurant.duplicated()]                                               # 全體數據檢查，抓整列資料一樣的數據
-dup_count_1 = TX_Restaurant[TX_Restaurant.duplicated(subset = ['Restaurant_Id','Restaurant_Name'])] # 針對 Id、Restaurant_Name 再檢查，防止同間餐廳資料被重複輸入
+dup_count = TX_Restaurant[TX_Restaurant.duplicated()]                                                               # 全體數據檢查，抓整列資料一樣的數據
+dup_count_1 = TX_Restaurant[TX_Restaurant.duplicated(subset = ['Restaurant_Id','Restaurant_Name'])]                 # 針對 Id、Restaurant_Name 再檢查，防止同間餐廳資料被重複輸入
 
 ##################################################################################################################################################################################################
 # 8. 提取TX的菜單資訊
-    # 以TX_Restaurant出現的Restaurant_Id，提取Restaurant_Menus相應的資料
-    # 重置index
+    # 從 Restaurant_Menus 篩選出 Restaurant_Id 出現在 TX_Restaurant 的菜單資料（類似inner join），並另存為 TX_Restaurant_Menus
 ##################################################################################################################################################################################################
     
-TX_Restaurant_Menus = Restaurant_Menus[Restaurant_Menus['Restaurant_Id'].isin(TX_Restaurant['Restaurant_Id'])]
+TX_Restaurant_Menus = Restaurant_Menus[Restaurant_Menus['Restaurant_Id'].isin(TX_Restaurant['Restaurant_Id'])]      # 先取出 ID，比對 Restaurant_Menus 的 ID 是否有共通，篩選有共通的 ID 並另存為 TX_Restaurant_Menus
 
-TX_Restaurant_Menus = TX_Restaurant_Menus.reset_index(drop=True)
+TX_Restaurant_Menus = TX_Restaurant_Menus.reset_index(drop=True)                                                    # 重設菜單資料的索引，刪除原本的 index（避免保留舊索引）
 TX_Restaurant = TX_Restaurant.reset_index(drop=True)
 
 ##################################################################################################################################################################################################
