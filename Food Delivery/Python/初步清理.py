@@ -29,14 +29,12 @@ Restaurant_Menus = Restaurant_Menus.drop('description' , axis = 1)
 
 ##################################################################################################################################################################################################
 # 4. 抓出restaurant.csv中，德克薩斯州(TX)的資料
-    # 將 full_address裡的Texas 轉換成 TX
-    # 抓出TX的資料
 ##################################################################################################################################################################################################
 
-Restaurants['full_address'] = Restaurants['full_address'].str.replace('Texas','TX')
-Restaurants['States_Abbr'] = Restaurants['full_address'].str.split(',').str[-2].str.strip()
+Restaurants['full_address'] = Restaurants['full_address'].str.replace('Texas','TX')                 # 將 full_address裡的Texas 轉換成 TX
+Restaurants['States_Abbr'] = Restaurants['full_address'].str.split(',').str[-2].str.strip()         # 從 full_address以「，」切割，取倒數第2段，去首尾空白值，命名「州名縮寫」
 
-TX_Restaurant = Restaurants[Restaurants['States_Abbr'] == 'TX']
+TX_Restaurant = Restaurants[Restaurants['States_Abbr'] == 'TX']                                     # 抓出德州 TX 資料
 
 ##################################################################################################################################################################################################
 # 5. 清理columns資訊
