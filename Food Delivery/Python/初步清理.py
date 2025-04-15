@@ -38,31 +38,28 @@ TX_Restaurant = Restaurants[Restaurants['States_Abbr'] == 'TX']                 
 
 ##################################################################################################################################################################################################
 # 5. 清理columns資訊
-    # 修改columns名稱
-    # columns名稱改為Snake Cake型式
-    # 重新排序columns順序
 ##################################################################################################################################################################################################
 
-TX_Restaurant = TX_Restaurant.rename(columns = {'name':'Restaurant_Name',
+TX_Restaurant = TX_Restaurant.rename(columns = {'name':'Restaurant_Name',                           # 修改columns名稱
                                                 'ratings':'Comments',
                                                 'id':'Restaurant_Id',
                                                 'category':'Restaurant_Category',
                                                 'price_range':'Restaurant_Price_Range',
                                                 'full_address':'Address'})
 
-Restaurant_Menus = Restaurant_Menus.rename(columns = {'name':'Food_Name',
+Restaurant_Menus = Restaurant_Menus.rename(columns = {'name':'Food_Name',                           # 修改columns名稱
                                                       'category':'Food_Category'})
 
-TX_Restaurant.columns = TX_Restaurant.columns.str.title()
+TX_Restaurant.columns = TX_Restaurant.columns.str.title()                                           # columns名稱改為Snake Cake型式
 Restaurant_Menus.columns = Restaurant_Menus.columns.str.title()
 
-new_columns_order = ['Restaurant_Id','Restaurant_Name','Position',
+new_columns_order = ['Restaurant_Id','Restaurant_Name','Position',                                  # 重新排序columns，列出自訂的順序
                      'Restaurant_Category','Restaurant_Price_Range',
                      'Score','Comments','Address','States_Abbr','Lat','Lng']
 
-TX_Restaurant = TX_Restaurant[new_columns_order]
+TX_Restaurant = TX_Restaurant[new_columns_order]                                                    # 套用至原來的 Dataframe
 
-new_columns_order_1 = ['Restaurant_Id','Food_Name',
+new_columns_order_1 = ['Restaurant_Id','Food_Name',                                                 # 同上
                        'Food_Category','Price']
 
 Restaurant_Menus = Restaurant_Menus[new_columns_order_1]
