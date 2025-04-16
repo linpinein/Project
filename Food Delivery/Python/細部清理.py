@@ -18,7 +18,7 @@ TX_Init_Restaurant = pd.read_csv(Path_2)
 # 2. 清除數據前後空值
 ##################################################################################################################################################################################################
 
-for i in TX_Init_Restaurant.columns:                                                                # 取這個 DataFrame 的所有欄位
+for i in TX_Init_Restaurant.columns:                                                                # 取這個 DataFrame 的所有columns
     if TX_Init_Restaurant[i].dtype == 'object':                                                     # 如果該 columns 型態為文字
         TX_Init_Restaurant[i] = TX_Init_Restaurant[i].str.strip()                                   # 去除前後空值，避免因前後空白造成統計分類錯誤
 
@@ -28,38 +28,33 @@ for i in TX_Init_Restaurant_Menus.columns:                                      
 
 ##################################################################################################################################################################################################
 # 3. 數據文字調整
-    # 刪除文字旁的emoji
-    # 刪除贅字amp;
-    # 將', '改成','
-    # 字母轉換成Snake_Cake型式
-    # 轉換為Snake_Cake後，'s會變為'S，恢復原狀
 ##################################################################################################################################################################################################
     
-for i in TX_Init_Restaurant.columns:
-    if TX_Init_Restaurant[i].dtype == 'object': 
-        TX_Init_Restaurant[i] = TX_Init_Restaurant[i].apply(remove_emoji).str.strip()
+for i in TX_Init_Restaurant.columns:                                                                                        # 取這個 DataFrame 的所有columns
+    if TX_Init_Restaurant[i].dtype == 'object':                                                                             # 如果該 columns 型態為文字
+        TX_Init_Restaurant[i] = TX_Init_Restaurant[i].apply(remove_emoji).str.strip()                                       # 去除emoji，再執行一次去除前後空值，確保數據乾淨、一致性
         
-for i in TX_Init_Restaurant_Menus.columns:
+for i in TX_Init_Restaurant_Menus.columns:                                                                                  # 同上，換個DataFrame處理
     if TX_Init_Restaurant_Menus[i].dtype == 'object': 
         TX_Init_Restaurant_Menus[i] = TX_Init_Restaurant_Menus[i].apply(remove_emoji).str.strip()
 
-TX_Init_Restaurant_Menus = TX_Init_Restaurant_Menus.replace('amp;' , '' , regex=True)                                         # 有替換到特殊字元時，須用正則表達式regex=True
-TX_Init_Restaurant = TX_Init_Restaurant.replace('amp;' , '' , regex=True)
+TX_Init_Restaurant_Menus = TX_Init_Restaurant_Menus.replace('amp;' , '')                                                    # 刪除贅字 amp;
+TX_Init_Restaurant = TX_Init_Restaurant.replace('amp;' , '')
 
-TX_Init_Restaurant_Menus = TX_Init_Restaurant_Menus.replace(', ' , ' , ' , regex=True)
-TX_Init_Restaurant = TX_Init_Restaurant.replace(', ' , ' , ' , regex=True)
-TX_Init_Restaurant['Restaurant_Category'] = TX_Init_Restaurant['Restaurant_Category'].replace(', ' , ',' , regex=True)        # 刪除逗號旁邊的空格，方便後續df.explode多值拆開
+TX_Init_Restaurant_Menus = TX_Init_Restaurant_Menus.replace(', ' , ' , ')                                                   # 將', '改成','
+TX_Init_Restaurant = TX_Init_Restaurant.replace(', ' , ' , ')
+TX_Init_Restaurant['Restaurant_Category'] = TX_Init_Restaurant['Restaurant_Category'].replace(', ' , ',')                   # 刪除逗號旁邊的空格，方便後續df.explode多值拆開
 
-for i in TX_Init_Restaurant.columns:
+for i in TX_Init_Restaurant.columns:                                                                                        # 同上，字母轉換成Snake_Cake型式
     if TX_Init_Restaurant[i].dtype == 'object':
         TX_Init_Restaurant[i] = TX_Init_Restaurant[i].str.title()
 
-for i in TX_Init_Restaurant_Menus.columns:
+for i in TX_Init_Restaurant_Menus.columns:                                                                                  # 同上，字母轉換成Snake_Cake型式
     if TX_Init_Restaurant_Menus[i].dtype == 'object':
         TX_Init_Restaurant_Menus[i] = TX_Init_Restaurant_Menus[i].str.title()
         
-TX_Init_Restaurant_Menus = TX_Init_Restaurant_Menus.replace("'S" , "'s" , regex=True)
-TX_Init_Restaurant = TX_Init_Restaurant.replace("'S" , "'s" , regex=True)
+TX_Init_Restaurant_Menus = TX_Init_Restaurant_Menus.replace("'S" , "'s")                                                    # 同上，後綴詞「's」在上面的 .title 會變成大寫，這邊將其修正回小寫                
+TX_Init_Restaurant = TX_Init_Restaurant.replace("'S" , "'s")
 
 ##################################################################################################################################################################################################
 # 4-1. 提取 餐廳類別 TX_Init_Restaurant_Category 資料表 
