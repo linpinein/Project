@@ -1,8 +1,8 @@
 import pandas as pd
-import emoji
+import emoji # type: ignore
 
-def remove_emoji(text):                                                                                             # 定義 移除emoji函數，用以移除文字旁的圖示
-    return emoji.replace_emoji(text , replace='')
+def remove_emoji(text):                                                 # 定義 移除emoji函數，用以移除文字旁的圖示
+    return emoji.replace_emoji(text , replace='')                       # 當有emoji時，替換成空字串
 
 ##################################################################################################################################################################################################
 # 1. 匯入資料
@@ -18,11 +18,11 @@ TX_Init_Restaurant = pd.read_csv(Path_2)
 # 2. 清除數據前後空值
 ##################################################################################################################################################################################################
 
-for i in TX_Init_Restaurant.columns:
-    if TX_Init_Restaurant[i].dtype == 'object': 
-        TX_Init_Restaurant[i] = TX_Init_Restaurant[i].str.strip()
+for i in TX_Init_Restaurant.columns:                                                                # 取這個 DataFrame 的所有欄位
+    if TX_Init_Restaurant[i].dtype == 'object':                                                     # 如果該 columns 型態為文字
+        TX_Init_Restaurant[i] = TX_Init_Restaurant[i].str.strip()                                   # 去除前後空值，避免因前後空白造成統計分類錯誤
 
-for i in TX_Init_Restaurant_Menus.columns:
+for i in TX_Init_Restaurant_Menus.columns:                                                          # 同上
     if TX_Init_Restaurant_Menus[i].dtype == 'object': 
         TX_Init_Restaurant_Menus[i] = TX_Init_Restaurant_Menus[i].str.strip()
 
