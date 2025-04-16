@@ -88,12 +88,11 @@ TX_Init_Restaurant = TX_Init_Restaurant.drop(columns = ['Address','States_Abbr',
 
 ##################################################################################################################################################################################################
 # 5. 檢查需求欄位數據
-    # TX_Init_Restaurant_Category 的 Restaurant_Category 相似數據名稱合併
 ##################################################################################################################################################################################################
 
 # Res_Cate_Count = TX_Init_Restaurant_Category['Restaurant_Category'].value_counts()                                        # 檢查各餐廳分類數量
 
-TX_Init_Restaurant_Category = TX_Init_Restaurant_Category.replace('Family Friendly','Family Meals')
+TX_Init_Restaurant_Category = TX_Init_Restaurant_Category.replace('Family Friendly','Family Meals')                         # 將大量出現、名稱相近的分類合併，避免重複歸類，提升分析的一致性、準確性
 TX_Init_Restaurant_Category = TX_Init_Restaurant_Category.replace('Group Friendly','Family Meals')
 TX_Init_Restaurant_Category = TX_Init_Restaurant_Category.replace('Sandwich','Sandwiches')
 TX_Init_Restaurant_Category = TX_Init_Restaurant_Category.replace('Salad','Salads')
