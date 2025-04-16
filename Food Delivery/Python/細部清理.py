@@ -77,14 +77,14 @@ TX_Init_Restaurant = TX_Init_Restaurant.drop(columns = 'Restaurant_Category')   
 # 4-2. 提取 餐廳位置 TX_Init_Restaurant_Location 資料表
 ##################################################################################################################################################################################################
 
-TX_Init_Restaurant_Location = TX_Init_Restaurant.drop(columns = ['Restaurant_Name', 'Position',
+TX_Init_Restaurant_Location = TX_Init_Restaurant.drop(columns = ['Restaurant_Name', 'Position',                             # 取有關 Location 的數據，刪除不需依傲的欄位
                                                                  'Restaurant_Price_Range','Score','Comments'])
 
-for i in TX_Init_Restaurant_Location:                                                                                       # 刪除TX_Init_Restaurant_Location頭尾空值
-    if TX_Init_Restaurant_Location[i].dtype == 'object': 
-        TX_Init_Restaurant_Location[i] = TX_Init_Restaurant_Location[i].str.strip()
+for i in TX_Init_Restaurant_Location:                                                                                       # 取這個 DataFrame 的所有columns
+    if TX_Init_Restaurant_Location[i].dtype == 'object':                                                                    # 如果該 columns 型態為文字
+        TX_Init_Restaurant_Location[i] = TX_Init_Restaurant_Location[i].str.strip()                                         # 去除前後空值
 
-TX_Init_Restaurant = TX_Init_Restaurant.drop(columns = ['Address','States_Abbr','Lat','Lng',])                              # 移除原資料表的Restaurant_Category欄
+TX_Init_Restaurant = TX_Init_Restaurant.drop(columns = ['Address','States_Abbr','Lat','Lng',])                              # 移除原資料表的Restaurant_Category欄（不在這次的分析範圍）
 
 ##################################################################################################################################################################################################
 # 5. 檢查需求欄位數據
