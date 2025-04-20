@@ -1,20 +1,19 @@
 /**************************************************************************************************************************************
-1. Score 的四分位數分群
-	- Min → Q1：低評分餐廳 / Q1 → Q3：中評分 / Q3 → Max：高評分
+1. Score 的四分位數的3段分群
 **************************************************************************************************************************************/
 
-ALTER TABLE																		-- 補後面建立新欄位語句，以利SQL語法運作
+ALTER TABLE																		-- 預先建立 Restaurant_Level 欄位，以便後續 UPDATE 語句能正確寫入 餐廳層級分類
 	TX_Restaurant
 ADD COLUMN
 	Restaurant_Level VARCHAR(30);
 
-WITH Res_Score_Cat as (
+WITH Res_Score_Cat as (															-- 餐廳評分分類
     SELECT
 		TXR.Restaurant_Id,
         CASE
-            WHEN Score >= SS.Min AND Score < SS.Q1 THEN 'Low'					-- Min → Q1（1.3~4.4）
-            WHEN Score >= SS.Q1 AND Score < SS.Q3 THEN 'Normal'					-- Q1 → Q3（4.5~4.7）
-            ELSE 'High'															-- Q3 → Max（4.8~5.0）
+            WHEN Score >= SS.Min AND Score < SS.Q1 THEN 'Low'					-- Min → Q1（1.3~4.4）：低評分餐廳
+            WHEN Score >= SS.Q1 AND Score < SS.Q3 THEN 'Normal'					-- Q1 → Q3（4.5~4.7）：中評分
+            ELSE 'High'															-- Q3 → Max（4.8~5.0）：高評分
         END as Score_Category
     FROM
         TX_Restaurant TXR,
