@@ -1,7 +1,7 @@
 /**********************************************************************************************************************************************************************************
 1. 觀察 Comments 的分布狀況
 **********************************************************************************************************************************************************************************/
-CREATE VIEW Comments_Stats
+CREATE VIEW Comments_Stats										-- 同 Score數據統計資料 註解
 	as
 WITH Comments_Dist as (
 	SELECT
@@ -25,7 +25,7 @@ Comments_Rank as (
 	FROM
 		TX_Restaurant
 ),
-Comments_IQR as (												-- Comments欄位的四分位數呈現
+Comments_IQR as (
 	SELECT
 		round(avg(Comments) , 2) as 'Avg',
 		min(Comments) as 'Min',
