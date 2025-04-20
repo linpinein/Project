@@ -17,7 +17,7 @@ WITH Res_Score_Cat as (															-- 餐廳評分分類
         END as Score_Category
     FROM
         TX_Restaurant TXR,
-        Score_Stats SS
+        Score_Stats SS															-- 來自 1. Score數據統計資料.sql 的虛擬表 Score_Stats
 ),
 
 /**************************************************************************************************************************************
