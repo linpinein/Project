@@ -43,6 +43,8 @@ No_Use_Cus AS (
         CreditCardTransaction CCT
     USING
         (CustomerID)
+	WHERE
+    	CC_Cus IS NULL													-- 在 CreditCardTransaction 表中沒有紀錄 = 沒有消費
 ),
 
 /*******************************************************************************
@@ -95,8 +97,6 @@ JOIN
 	AG
 on
 	No_Use_Cus.A_Cus = AG.CustomerID
-WHERE
-    CC_Cus IS NULL
 GROUP by
 	1;
 
