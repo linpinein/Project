@@ -43,6 +43,8 @@ No_Use_Cus AS (
         CreditCardTransaction CCT
     USING
         (CustomerID)
+	WHERE
+    	CC_Cus IS NULL
 ),
 
 /*******************************************************************************
@@ -105,8 +107,6 @@ JOIN
 	Customers C
 on
 	AG.CustomerID = C.CustomerID
-WHERE
-    CC_Cus IS NULL
 GROUP by
 	1,2
 
